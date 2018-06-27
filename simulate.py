@@ -98,7 +98,8 @@ C_CARD_NUMBER_GO_TO_BOARDWALK = 10
 
 class Player:
     """
-
+    Player class holding information about the Player's movements and dice 
+    rolls.
     """
     def __init__(self):
         self.index_position = 0
@@ -109,11 +110,10 @@ class Player:
 
     def simulate_round(self):
         dice_value, is_double = self.roll()
-        print("Dice Rolled: {}".format(dice_value))
+        print("Dice Rolled: {}, double: {}".format(dice_value, is_double))
         self.move(dice_value, is_double)
         print("Moved To: {}".format(squares[self.index_position]["name"]))
         self.evaluate_position()
-
 
     @staticmethod
     def roll():
@@ -133,10 +133,7 @@ class Player:
             self.move_to_jail()
         else:
             new_position = self.index_position + number_of_spaces
-            if new_position >= NUMBER_OF_SQUARES:
-                self.move_to_go()
-            else:
-                self.index_position = new_position
+            self.index_position = new_position % NUMBER_OF_SQUARES
 
     def move_to_go(self):
         self.index_position = SQUARE_INDEX_GO
@@ -148,6 +145,7 @@ class Player:
         self.number_of_doubles_rolled = 0
 
     def evaluate_position(self):
+        global cc_cards, chance_cards
         position_type = squares[self.index_position]["type"]
         if position_type == SquareType.GO_TO_JAIL:
             self.move_to_jail()
@@ -157,10 +155,13 @@ class Player:
             card_index = random.randint(0, len(cc_cards))
             card = cc_cards.pop(card_index)
             if card == CC_CARD_NUMBER_ADVANCE_TO_GO:
+                print("Community Chest: Move to Go")
                 self.move_to_go()
             elif card == CC_CARD_NUMBER_GET_OUT_OF_JAIL_FREE:
+                print("Community Chest: Get out of jail free")
                 self.has_get_out_of_jail_free_card = True
             elif card == CC_CARD_NUMBER_GO_TO_JAIL:
+                print("Community Chest: Go to Jail")
                 self.move_to_jail()
         elif position_type == SquareType.CHANCE:
             if len(chance_cards) == 0:
@@ -169,29 +170,39 @@ class Player:
             card = chance_cards.pop(card_index)
             moved = False  # Flag to see if the Player moved
             if card == C_CARD_NUMBER_ADVANCE_TO_GO:
+                print("Chance: Move to Go")
                 moved = True
                 self.move_to_go()
             elif card == C_CARD_NUMBER_ADVANCE_TO_ILLINOIS:
+                print("Chance: Move to Illinois")
                 moved = True
             elif card == C_CARD_NUMBER_ADVANCE_TO_ST_CHARLES:
+                print("Chance: Move to St. Charles")
                 moved = True
             elif card == C_CARD_NUMBER_ADVANCE_TO_NEAREST_UTILITY:
+                print("Chance: Move to Utility")
                 moved = True
             elif card == C_CARD_NUMBER_ADVANCE_TO_NEAREST_RAILROAD:
+                print("Chance: Move to Railroad")
                 moved = True
             elif card == C_CARD_NUMBER_GET_OUT_OF_JAIL_FREE:
+                print("Chance: Get out of jail free")
                 moved = True
                 self.has_get_out_of_jail_free_card = True
             elif card == C_CARD_NUMBER_GO_BACK_3:
+                print("Chance: Move back 3")
                 moved = True
                 new_position = self.index_position - 3
                 self.index_position = new_position % NUMBER_OF_SQUARES
             elif card == C_CARD_NUMBER_GO_TO_JAIL:
+                print("Chance: Move to Jail")
                 moved = True
                 self.move_to_jail()
             elif card == C_CARD_NUMBER_GO_TO_READING:
+                print("Chance: Move to Reading")
                 moved = True
             elif card == C_CARD_NUMBER_GO_TO_BOARDWALK:
+                print("Chance: Move to Boardwalk")
                 moved = True
             # Reevaluate position if a card moved Player
             if moved:
