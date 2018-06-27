@@ -3,6 +3,9 @@ Simulate a single character moving around a monopoly board to see the
 percentage of landing on each square.
 """
 import enum
+import random
+
+NUMBER_OF_SQUARES = 40
 
 
 class SquareType(enum.Enum):
@@ -70,3 +73,176 @@ squares = [
     {"name": "Luxury Tax", "type": SquareType.BLUE},
     {"name": "Board Walk", "type": SquareType.BLUE}
 ]
+
+SQUARE_INDEX_GO = 0
+SQUARE_INDEX_JAIL = 10
+
+cc_cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+CC_CARD_NUMBER_ADVANCE_TO_GO = 1
+CC_CARD_NUMBER_GET_OUT_OF_JAIL_FREE = 2
+CC_CARD_NUMBER_GO_TO_JAIL = 3
+
+
+chance_cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+C_CARD_NUMBER_ADVANCE_TO_GO = 1
+C_CARD_NUMBER_ADVANCE_TO_ILLINOIS = 2
+C_CARD_NUMBER_ADVANCE_TO_ST_CHARLES = 3
+C_CARD_NUMBER_ADVANCE_TO_NEAREST_UTILITY = 4
+C_CARD_NUMBER_ADVANCE_TO_NEAREST_RAILROAD = 5
+C_CARD_NUMBER_GET_OUT_OF_JAIL_FREE = 6
+C_CARD_NUMBER_GO_BACK_3 = 7
+C_CARD_NUMBER_GO_TO_JAIL = 8
+C_CARD_NUMBER_GO_TO_READING = 9
+C_CARD_NUMBER_GO_TO_BOARDWALK = 10
+
+
+class Player:
+    """
+
+    """
+    def __init__(self):
+        self.index_position = 0
+        self.in_jail = False
+        self.has_get_out_of_jail_free_card = False
+        self.number_of_doubles_rolled = 0
+        self.number_of_rounds = 0
+
+    def simulate_round(self):
+        dice_value, is_double = self.roll()
+        print("Dice Rolled: {}".format(dice_value))
+        self.move(dice_value, is_double)
+        print("Moved To: {}".format(squares[self.index_position]["name"]))
+        self.evaluate_position()
+
+
+    @staticmethod
+    def roll():
+        dice_1 = random.randint(1, 6)
+        dice_2 = random.randint(1, 6)
+        is_double = dice_1 == dice_2
+        return dice_1 + dice_2, is_double
+
+    def move(self, number_of_spaces, is_double):
+        # 3 consecutive doubles will put you in jail
+        if is_double:
+            self.number_of_doubles_rolled += 1
+        else:
+            self.number_of_doubles_rolled = 0
+        # Move to appropriate spot on board
+        if self.number_of_doubles_rolled == 3:
+            self.move_to_jail()
+        else:
+            new_position = self.index_position + number_of_spaces
+            if new_position >= NUMBER_OF_SQUARES:
+                self.move_to_go()
+            else:
+                self.index_position = new_position
+
+    def move_to_go(self):
+        self.index_position = SQUARE_INDEX_GO
+        self.in_jail = False
+
+    def move_to_jail(self):
+        self.index_position = SQUARE_INDEX_JAIL
+        self.in_jail = True
+        self.number_of_doubles_rolled = 0
+
+    def evaluate_position(self):
+        position_type = squares[self.index_position]["type"]
+        if position_type == SquareType.GO_TO_JAIL:
+            self.move_to_jail()
+        elif position_type == SquareType.COMMUNITY_CHEST:
+            if len(cc_cards) == 0:
+                shuffle_community_chest_deck()
+            card_index = random.randint(0, len(cc_cards))
+            card = cc_cards.pop(card_index)
+            if card == CC_CARD_NUMBER_ADVANCE_TO_GO:
+                self.move_to_go()
+            elif card == CC_CARD_NUMBER_GET_OUT_OF_JAIL_FREE:
+                self.has_get_out_of_jail_free_card = True
+            elif card == CC_CARD_NUMBER_GO_TO_JAIL:
+                self.move_to_jail()
+        elif position_type == SquareType.CHANCE:
+            if len(chance_cards) == 0:
+                shuffle_chance_deck()
+            card_index = random.randint(0, len(chance_cards))
+            card = chance_cards.pop(card_index)
+            moved = False  # Flag to see if the Player moved
+            if card == C_CARD_NUMBER_ADVANCE_TO_GO:
+                moved = True
+                self.move_to_go()
+            elif card == C_CARD_NUMBER_ADVANCE_TO_ILLINOIS:
+                moved = True
+            elif card == C_CARD_NUMBER_ADVANCE_TO_ST_CHARLES:
+                moved = True
+            elif card == C_CARD_NUMBER_ADVANCE_TO_NEAREST_UTILITY:
+                moved = True
+            elif card == C_CARD_NUMBER_ADVANCE_TO_NEAREST_RAILROAD:
+                moved = True
+            elif card == C_CARD_NUMBER_GET_OUT_OF_JAIL_FREE:
+                moved = True
+                self.has_get_out_of_jail_free_card = True
+            elif card == C_CARD_NUMBER_GO_BACK_3:
+                moved = True
+                new_position = self.index_position - 3
+                self.index_position = new_position % NUMBER_OF_SQUARES
+            elif card == C_CARD_NUMBER_GO_TO_JAIL:
+                moved = True
+                self.move_to_jail()
+            elif card == C_CARD_NUMBER_GO_TO_READING:
+                moved = True
+            elif card == C_CARD_NUMBER_GO_TO_BOARDWALK:
+                moved = True
+            # Reevaluate position if a card moved Player
+            if moved:
+                self.evaluate_position()
+
+
+def simulate(number_of_turns):
+    """
+    Simulate a player moving around a Monopoly board.
+
+    :param number_of_turns:
+    :return: void
+    """
+    player = Player()
+    for ii in range(number_of_turns):
+        print("Current Position: {}".format(player.index_position))
+        player.simulate_round()
+        print("New Position: {}\n".format(player.index_position))
+
+
+def shuffle_community_chest_deck():
+    """
+    Shuffles a new community chest deck.
+
+    :return:
+    """
+    global cc_cards
+    cc_cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    random.shuffle(cc_cards)
+
+
+def shuffle_chance_deck():
+    """
+    Shuffles a new chance deck.
+
+    :return:
+    """
+    global chance_cards
+    chance_cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    random.shuffle(chance_cards)
+
+
+def init():
+    """
+    Initializes a new game. Community Chest and Chance decks are shuffled.
+    :return: void
+    """
+    shuffle_community_chest_deck()
+    shuffle_chance_deck()
+
+
+if __name__ == "__main__":
+    init()
+    simulate(10)
