@@ -75,7 +75,19 @@ squares = [
 ]
 
 SQUARE_INDEX_GO = 0
+SQUARE_INDEX_READING_RR = 5
+SQUARE_INDEX_CHANGE_1 = 7
 SQUARE_INDEX_JAIL = 10
+SQUARE_INDEX_ST_CHARLES = 11
+SQUARE_INDEX_ELECTRIC_CO = 12
+SQUARE_INDEX_PENN_RR = 15
+SQUARE_INDEX_CHANCE_2 = 22
+SQUARE_INDEX_ILLINOIS = 24
+SQUARE_INDEX_BO_RR = 25
+SQUARE_INDEX_WATER_WORKS = 28
+SQUARE_INDEX_SHORT_LINE_RR = 35
+SQUARE_INDEX_CHANCE_3 = 36
+SQUARE_INDEX_BOARDWALK = 39
 
 cc_cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 CC_CARD_NUMBER_ADVANCE_TO_GO = 1
@@ -110,9 +122,7 @@ class Player:
 
     def simulate_round(self):
         dice_value, is_double = self.roll()
-        print("Dice Rolled: {}, double: {}".format(dice_value, is_double))
         self.move(dice_value, is_double)
-        print("Moved To: {}".format(squares[self.index_position]["name"]))
         self.evaluate_position()
 
     @staticmethod
@@ -137,12 +147,40 @@ class Player:
 
     def move_to_go(self):
         self.index_position = SQUARE_INDEX_GO
-        self.in_jail = False
 
     def move_to_jail(self):
         self.index_position = SQUARE_INDEX_JAIL
         self.in_jail = True
         self.number_of_doubles_rolled = 0
+
+    def move_to_illinois(self):
+        self.index_position = SQUARE_INDEX_ILLINOIS
+
+    def move_to_st_charles(self):
+        self.index_position = SQUARE_INDEX_ST_CHARLES
+
+    def move_to_nearest_utility(self):
+        position = self.index_position
+        if (position == SQUARE_INDEX_CHANGE_1
+                or position == SQUARE_INDEX_CHANCE_2):
+            self.index_position = SQUARE_INDEX_ELECTRIC_CO
+        else:
+            self.index_position = SQUARE_INDEX_WATER_WORKS
+
+    def move_to_nearest_railroad(self):
+        position = self.index_position
+        if position == SQUARE_INDEX_CHANGE_1:
+            self.index_position = SQUARE_INDEX_PENN_RR
+        elif position == SQUARE_INDEX_CHANCE_2:
+            self.index_position = SQUARE_INDEX_BO_RR
+        else:
+            self.index_position = SQUARE_INDEX_READING_RR
+
+    def move_to_reading(self):
+        self.index_position = SQUARE_INDEX_READING_RR
+
+    def move_to_boardwalk(self):
+        self.index_position = SQUARE_INDEX_BOARDWALK
 
     def evaluate_position(self):
         global cc_cards, chance_cards
@@ -155,13 +193,10 @@ class Player:
             card_index = random.randint(0, len(cc_cards))
             card = cc_cards.pop(card_index)
             if card == CC_CARD_NUMBER_ADVANCE_TO_GO:
-                print("Community Chest: Move to Go")
                 self.move_to_go()
             elif card == CC_CARD_NUMBER_GET_OUT_OF_JAIL_FREE:
-                print("Community Chest: Get out of jail free")
                 self.has_get_out_of_jail_free_card = True
             elif card == CC_CARD_NUMBER_GO_TO_JAIL:
-                print("Community Chest: Go to Jail")
                 self.move_to_jail()
         elif position_type == SquareType.CHANCE:
             if len(chance_cards) == 0:
@@ -170,40 +205,35 @@ class Player:
             card = chance_cards.pop(card_index)
             moved = False  # Flag to see if the Player moved
             if card == C_CARD_NUMBER_ADVANCE_TO_GO:
-                print("Chance: Move to Go")
                 moved = True
                 self.move_to_go()
             elif card == C_CARD_NUMBER_ADVANCE_TO_ILLINOIS:
-                print("Chance: Move to Illinois")
                 moved = True
+                self.move_to_illinois()
             elif card == C_CARD_NUMBER_ADVANCE_TO_ST_CHARLES:
-                print("Chance: Move to St. Charles")
                 moved = True
+                self.move_to_st_charles()
             elif card == C_CARD_NUMBER_ADVANCE_TO_NEAREST_UTILITY:
-                print("Chance: Move to Utility")
                 moved = True
+                self.move_to_nearest_utility()
             elif card == C_CARD_NUMBER_ADVANCE_TO_NEAREST_RAILROAD:
-                print("Chance: Move to Railroad")
                 moved = True
+                self.move_to_nearest_railroad()
             elif card == C_CARD_NUMBER_GET_OUT_OF_JAIL_FREE:
-                print("Chance: Get out of jail free")
-                moved = True
                 self.has_get_out_of_jail_free_card = True
             elif card == C_CARD_NUMBER_GO_BACK_3:
-                print("Chance: Move back 3")
                 moved = True
                 new_position = self.index_position - 3
                 self.index_position = new_position % NUMBER_OF_SQUARES
             elif card == C_CARD_NUMBER_GO_TO_JAIL:
-                print("Chance: Move to Jail")
                 moved = True
                 self.move_to_jail()
             elif card == C_CARD_NUMBER_GO_TO_READING:
-                print("Chance: Move to Reading")
                 moved = True
+                self.move_to_reading()
             elif card == C_CARD_NUMBER_GO_TO_BOARDWALK:
-                print("Chance: Move to Boardwalk")
                 moved = True
+                self.move_to_boardwalk()
             # Reevaluate position if a card moved Player
             if moved:
                 self.evaluate_position()
