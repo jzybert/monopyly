@@ -2,12 +2,11 @@
 Simulate a single character moving around a monopoly board to see the
 percentage of landing on each square.
 """
+import argparse
 import enum
 import random
 
 NUMBER_OF_SQUARES = 40
-NUMBER_OF_ROUNDS = 100
-NUMBER_OF_ITERATIONS = 1000000
 
 # Array to be updated each time an index is visited
 count_visited = [
@@ -338,6 +337,7 @@ def shuffle_chance_deck():
 def init():
     """
     Initializes a new game. Community Chest and Chance decks are shuffled.
+
     :return: void
     """
     shuffle_community_chest_deck()
@@ -345,5 +345,13 @@ def init():
 
 
 if __name__ == "__main__":
+    # Create argument parser
+    parser = argparse.ArgumentParser(
+        description="Options for Monopoly simulation"
+    )
+    parser.add_argument("rounds", type=int, help="number of rounds per game")
+    parser.add_argument("games", type=int, help="number of games")
+    args = parser.parse_args()
+    # Simulate the Monopoly games
     init()
-    simulate(NUMBER_OF_ROUNDS, NUMBER_OF_ITERATIONS)
+    simulate(args.rounds, args.games)
