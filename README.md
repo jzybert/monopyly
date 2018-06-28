@@ -20,65 +20,65 @@ are landed on more than others.
 Running the script for 100 rounds over 1 million iterations, I got these results:
 
 ##### Squares:
-- Go: 1.827%
-- Mediterranean Avenue: 1.318%
-- Community Chest: 1.404%
-- Baltic Avenue: 1.481%
-- Income Tax: 1.683%
-- Reading Railroad: 2.273%
-- Central Avenue: 1.77%
-- Chance: 1.906%
-- Vermont Avenue: 1.853%
-- Connecticut Avenue: 1.824%
-- Jail: 11.478%
-- St. Charles Place: 2.266%
-- Electric Company: 4.033%
-- States Avenue: 1.634%
-- Virginia Avenue: 3.846%
-- Pennsylvania Railroad: 1.826%
-- St. James Place: 4.223%
-- Community Chest: 1.753%
-- Tennessee Avenue: 4.561%
-- New York Avenue: 2.081%
-- Free Parking: 4.856%
-- Kentucky Avenue: 1.754%
-- Chance: 5.124%
-- Indiana Avenue: 1.732%
-- Illinois Avenue: 3.815%
-- B. & O. Railroad: 1.979%
-- Atlantic Avenue: 2.967%
-- Ventnor Avenue: 1.658%
-- Water Works: 2.724%
-- Marvin Gardens: 1.614%
-- Go To Jail: 2.347%
-- Pacific Avenue: 1.665%
-- North Carolina Avenue: 2.031%
-- Community Chest: 1.648%
-- Pennsylvania Avenue: 1.661%
-- Short Line: 1.48%
-- Chance: 1.408%
-- Park Place: 1.338%
-- Luxury Tax: 1.32%
-- Board Walk: 1.841%
+- &nbsp;&nbsp;&nbsp;&nbsp; Go: 1.827%
+- ![#654321](https://placehold.it/15/654321/000000?text=+) Mediterranean Avenue: 1.318%
+- &nbsp;&nbsp;&nbsp;&nbsp; Community Chest: 1.404%
+- ![#654321](https://placehold.it/15/654321/000000?text=+) Baltic Avenue: 1.481%
+- &nbsp;&nbsp;&nbsp;&nbsp; Income Tax: 1.683%
+- &nbsp;&nbsp;&nbsp;&nbsp; Reading Railroad: 2.273%
+- ![#ADD8E6](https://placehold.it/15/ADD8E6/000000?text=+) Central Avenue: 1.77%
+- &nbsp;&nbsp;&nbsp;&nbsp; Chance: 1.906%
+- ![#ADD8E6](https://placehold.it/15/ADD8E6/000000?text=+) Vermont Avenue: 1.853%
+- ![#ADD8E6](https://placehold.it/15/ADD8E6/000000?text=+) Connecticut Avenue: 1.824%
+- &nbsp;&nbsp;&nbsp;&nbsp; Jail: 11.478%
+- ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) St. Charles Place: 2.266%
+- &nbsp;&nbsp;&nbsp;&nbsp; Electric Company: 4.033%
+- ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) States Avenue: 1.634%
+- ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) Virginia Avenue: 3.846%
+- &nbsp;&nbsp;&nbsp;&nbsp; Pennsylvania Railroad: 1.826%
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) St. James Place: 4.223%
+- &nbsp;&nbsp;&nbsp;&nbsp; Community Chest: 1.753%
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) Tennessee Avenue: 4.561%
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) New York Avenue: 2.081%
+- &nbsp;&nbsp;&nbsp;&nbsp; Free Parking: 4.856%
+- ![#ff0000](https://placehold.it/15/ff0000/000000?text=+) Kentucky Avenue: 1.754%
+- &nbsp;&nbsp;&nbsp;&nbsp; Chance: 5.124%
+- ![#ff0000](https://placehold.it/15/ff0000/000000?text=+) Indiana Avenue: 1.732%
+- ![#ff0000](https://placehold.it/15/ff0000/000000?text=+) Illinois Avenue: 3.815%
+- &nbsp;&nbsp;&nbsp;&nbsp; B. & O. Railroad: 1.979%
+- ![#ffff00](https://placehold.it/15/ffff00/000000?text=+) Atlantic Avenue: 2.967%
+- ![#ffff00](https://placehold.it/15/ffff00/000000?text=+) Ventnor Avenue: 1.658%
+- &nbsp;&nbsp;&nbsp;&nbsp; Water Works: 2.724%
+- ![#ffff00](https://placehold.it/15/ffff00/000000?text=+) Marvin Gardens: 1.614%
+- &nbsp;&nbsp;&nbsp;&nbsp; Go To Jail: 2.347%
+- ![#006400](https://placehold.it/15/006400/000000?text=+) Pacific Avenue: 1.665%
+- ![#006400](https://placehold.it/15/006400/000000?text=+) North Carolina Avenue: 2.031%
+- &nbsp;&nbsp;&nbsp;&nbsp; Community Chest: 1.648%
+- ![#006400](https://placehold.it/15/006400/000000?text=+) Pennsylvania Avenue: 1.661%
+- &nbsp;&nbsp;&nbsp;&nbsp; Short Line: 1.48%
+- &nbsp;&nbsp;&nbsp;&nbsp; Chance: 1.408%
+- ![#003366](https://placehold.it/15/003366/000000?text=+) Park Place: 1.338%
+- &nbsp;&nbsp;&nbsp;&nbsp; Luxury Tax: 1.32%
+- ![#003366](https://placehold.it/15/003366/000000?text=+) Board Walk: 1.841%
 
 ##### Types:
-- Go: 1.827%
-- Brown: 2.799%
-- Tax: 1.683%
-- Railroad: 7.559%
-- Light Blue 5.446%
-- Chance: 8.437%
-- Jail: 11.478%
-- Pink: 7.745%
-- Utility: 6.756%
-- Orange: 10.865%
-- Community Chest: 4.804%
-- Free Parking 4.856%
-- Red: 7.301%
-- Yellow: 6.24%
-- Go To Jail: 2.347%
-- Green: 5.357%
-- Dark Blue: 4.499%
+- &nbsp;&nbsp;&nbsp;&nbsp; Go: 1.827%
+- ![#654321](https://placehold.it/15/654321/000000?text=+) Brown: 2.799%
+- &nbsp;&nbsp;&nbsp;&nbsp; Tax: 1.683%
+- &nbsp;&nbsp;&nbsp;&nbsp; Railroad: 7.559%
+- ![#ADD8E6](https://placehold.it/15/ADD8E6/000000?text=+) Light Blue 5.446%
+- &nbsp;&nbsp;&nbsp;&nbsp; Chance: 8.437%
+- &nbsp;&nbsp;&nbsp;&nbsp; Jail: 11.478%
+- ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) Pink: 7.745%
+- &nbsp;&nbsp;&nbsp;&nbsp; Utility: 6.756%
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) Orange: 10.865%
+- &nbsp;&nbsp;&nbsp;&nbsp; Community Chest: 4.804%
+- &nbsp;&nbsp;&nbsp;&nbsp; Free Parking 4.856%
+- ![#ff0000](https://placehold.it/15/ff0000/000000?text=+) Red: 7.301%
+- ![#ffff00](https://placehold.it/15/ffff00/000000?text=+) Yellow: 6.24%
+- &nbsp;&nbsp;&nbsp;&nbsp; Go To Jail: 2.347%
+- ![#006400](https://placehold.it/15/006400/000000?text=+) Green: 5.357%
+- ![#003366](https://placehold.it/15/003366/000000?text=+) Dark Blue: 4.499%
 
 ## Conclusion
 Based on the results, the Jail square (both in jail and visiting jail) is the most
