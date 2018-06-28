@@ -30,16 +30,16 @@ Running the script for 100 rounds over 1 million iterations, I got these results
 - &nbsp;&nbsp;&nbsp;&nbsp; Chance: 1.906%
 - ![#ADD8E6](https://placehold.it/15/ADD8E6/000000?text=+) Vermont Avenue: 1.853%
 - ![#ADD8E6](https://placehold.it/15/ADD8E6/000000?text=+) Connecticut Avenue: 1.824%
-- &nbsp;&nbsp;&nbsp;&nbsp; Jail: 11.478%
+- &nbsp;&nbsp;&nbsp;&nbsp; **Jail: 11.478%**
 - ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) St. Charles Place: 2.266%
 - &nbsp;&nbsp;&nbsp;&nbsp; Electric Company: 4.033%
 - ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) States Avenue: 1.634%
 - ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) Virginia Avenue: 3.846%
 - &nbsp;&nbsp;&nbsp;&nbsp; Pennsylvania Railroad: 1.826%
-- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) St. James Place: 4.223%
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) **St. James Place: 4.223%**
 - &nbsp;&nbsp;&nbsp;&nbsp; Community Chest: 1.753%
-- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) Tennessee Avenue: 4.561%
-- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) New York Avenue: 2.081%
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) **Tennessee Avenue: 4.561%**
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) **New York Avenue: 2.081%**
 - &nbsp;&nbsp;&nbsp;&nbsp; Free Parking: 4.856%
 - ![#ff0000](https://placehold.it/15/ff0000/000000?text=+) Kentucky Avenue: 1.754%
 - &nbsp;&nbsp;&nbsp;&nbsp; Chance: 5.124%
@@ -68,10 +68,10 @@ Running the script for 100 rounds over 1 million iterations, I got these results
 - &nbsp;&nbsp;&nbsp;&nbsp; Railroad: 7.559%
 - ![#ADD8E6](https://placehold.it/15/ADD8E6/000000?text=+) Light Blue 5.446%
 - &nbsp;&nbsp;&nbsp;&nbsp; Chance: 8.437%
-- &nbsp;&nbsp;&nbsp;&nbsp; Jail: 11.478%
+- &nbsp;&nbsp;&nbsp;&nbsp; **Jail: 11.478%**
 - ![#ff69b4](https://placehold.it/15/ff69b4/000000?text=+) Pink: 7.745%
 - &nbsp;&nbsp;&nbsp;&nbsp; Utility: 6.756%
-- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) Orange: 10.865%
+- ![#ffa500](https://placehold.it/15/ffa500/000000?text=+) **Orange: 10.865%**
 - &nbsp;&nbsp;&nbsp;&nbsp; Community Chest: 4.804%
 - &nbsp;&nbsp;&nbsp;&nbsp; Free Parking 4.856%
 - ![#ff0000](https://placehold.it/15/ff0000/000000?text=+) Red: 7.301%
