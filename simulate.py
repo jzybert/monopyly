@@ -6,29 +6,42 @@ import enum
 import random
 
 NUMBER_OF_SQUARES = 40
+NUMBER_OF_ROUNDS = 100
+NUMBER_OF_ITERATIONS = 100
+
+# Array to be updated each time an index is visited
+count_visited = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+]
+
+# Array to be updated each time a SquareType is visited
+count_type_visited = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
 class SquareType(enum.Enum):
     """
     Enumeration class representing what type a square can be.
     """
-    GO = 1
-    DARK_BLUE = 2
-    TAX = 3
-    RAILROAD = 4
-    LIGHT_BLUE = 5
-    CHANCE = 6
-    JAIL = 7
-    PURPLE = 8
-    UTILITY = 9
-    ORANGE = 10
-    COMMUNITY_CHEST = 11
-    FREE_PARKING = 12
-    RED = 13
-    YELLOW = 14
-    GO_TO_JAIL = 15
-    GREEN = 16
-    BLUE = 17
+    GO = 0
+    DARK_BLUE = 1
+    TAX = 2
+    RAILROAD = 3
+    LIGHT_BLUE = 4
+    CHANCE = 5
+    JAIL = 6
+    PURPLE = 7
+    UTILITY = 8
+    ORANGE = 9
+    COMMUNITY_CHEST = 10
+    FREE_PARKING = 11
+    RED = 12
+    YELLOW = 13
+    GO_TO_JAIL = 14
+    GREEN = 15
+    BLUE = 16
 
 
 squares = [
@@ -117,13 +130,22 @@ class Player:
         self.index_position = 0
         self.in_jail = False
         self.has_get_out_of_jail_free_card = False
+        self.number_of_jail_attempts = 0
         self.number_of_doubles_rolled = 0
         self.number_of_rounds = 0
 
     def simulate_round(self):
         dice_value, is_double = self.roll()
-        self.move(dice_value, is_double)
-        self.evaluate_position()
+        if self.in_jail:
+            if is_double or self.number_of_jail_attempts == 3:
+                self.number_of_jail_attempts = 0
+                self.move(dice_value, is_double)
+                self.evaluate_position()
+            elif self.number_of_jail_attempts == 3:
+                self.number_of_jail_attempts += 1
+        else:
+            self.move(dice_value, is_double)
+            self.evaluate_position()
 
     @staticmethod
     def roll():
@@ -183,15 +205,18 @@ class Player:
         self.index_position = SQUARE_INDEX_BOARDWALK
 
     def evaluate_position(self):
-        global cc_cards, chance_cards
+        global cc_cards, chance_cards, count_visited
+        # Increment square visited
+        count_visited[self.index_position] += 1
+        # Evaluate what to do at new position
         position_type = squares[self.index_position]["type"]
+        count_type_visited[position_type.value] += 1
         if position_type == SquareType.GO_TO_JAIL:
             self.move_to_jail()
         elif position_type == SquareType.COMMUNITY_CHEST:
             if len(cc_cards) == 0:
                 shuffle_community_chest_deck()
-            card_index = random.randint(0, len(cc_cards))
-            card = cc_cards.pop(card_index)
+            card = cc_cards.pop()
             if card == CC_CARD_NUMBER_ADVANCE_TO_GO:
                 self.move_to_go()
             elif card == CC_CARD_NUMBER_GET_OUT_OF_JAIL_FREE:
@@ -201,8 +226,7 @@ class Player:
         elif position_type == SquareType.CHANCE:
             if len(chance_cards) == 0:
                 shuffle_chance_deck()
-            card_index = random.randint(0, len(chance_cards))
-            card = chance_cards.pop(card_index)
+            card = chance_cards.pop()
             moved = False  # Flag to see if the Player moved
             if card == C_CARD_NUMBER_ADVANCE_TO_GO:
                 moved = True
@@ -239,28 +263,61 @@ class Player:
                 self.evaluate_position()
 
 
-def simulate(number_of_turns):
+def calculate_percentage_visited():
+    """
+    Calculate the percentage of visiting each square based on the number of
+    rounds.
+
+    :return: a list of percentages for squares and types
+    """
+    global count_visited
+    percentages_squares = []
+    percentages_types = []
+    for num_visited in count_visited:
+        percentage = round((num_visited / sum(count_visited)) * 100, 3)
+        percentage_str = str(percentage) + "%"
+        percentages_squares.append(percentage_str)
+    for num_visited in count_type_visited:
+        percentage = round((num_visited / sum(count_type_visited)) * 100, 3)
+        percentage_str = str(percentage) + "%"
+        percentages_types.append(percentage_str)
+    return percentages_squares, percentages_types
+
+
+def simulate(number_of_rounds, number_of_iterations):
     """
     Simulate a player moving around a Monopoly board.
 
-    :param number_of_turns:
+    :param number_of_rounds: the number of rounds to move the player
+    :param number_of_iterations: the number of iterations to test
     :return: void
     """
-    player = Player()
-    for ii in range(number_of_turns):
-        print("Current Position: {}".format(player.index_position))
-        player.simulate_round()
-        print("New Position: {}\n".format(player.index_position))
+    global count_visited
+    for ii in range(number_of_iterations):
+        player = Player()
+        for jj in range(number_of_rounds):
+            player.simulate_round()
+    percentages_squares, percentages_types = calculate_percentage_visited()
+    for ii in range(len(squares)):
+        square = squares[ii]
+        percentage = percentages_squares[ii]
+        print(square["name"] + ": " + percentage)
+    print()
+    for ii in range(len(count_type_visited)):
+        type_name = SquareType(ii).name
+        percentage = percentages_types[ii]
+        print(type_name + ": " + percentage)
 
 
 def shuffle_community_chest_deck():
     """
     Shuffles a new community chest deck.
 
-    :return:
+    :return: void
     """
     global cc_cards
-    cc_cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    cc_cards.clear()
+    cc_cards.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
     random.shuffle(cc_cards)
 
 
@@ -268,10 +325,11 @@ def shuffle_chance_deck():
     """
     Shuffles a new chance deck.
 
-    :return:
+    :return: void
     """
     global chance_cards
-    chance_cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    chance_cards.clear()
+    chance_cards.extend([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
     random.shuffle(chance_cards)
 
 
@@ -286,4 +344,4 @@ def init():
 
 if __name__ == "__main__":
     init()
-    simulate(10)
+    simulate(NUMBER_OF_ROUNDS, NUMBER_OF_ITERATIONS)
