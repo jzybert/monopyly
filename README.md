@@ -83,7 +83,7 @@ Running the script for 100 rounds over 1 million iterations, I got these results
 ## Conclusion
 Based on the results, the Jail square (both in jail and visiting jail) is the most
 visited square at 11.478%. As for housing types, Orange is the most landed on at 
-10.865% followed by Pink and Red.
+10.865% followed by Pink and Red at 7.745% and 7.301% respectively.
 
 It makes sense the Orange would be the most visited type given that Jail is the most
 visited square. The average roll of two dice will be 7 and Orange is 6 to 9 squares away.
