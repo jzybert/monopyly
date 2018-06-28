@@ -90,3 +90,12 @@ visited square. The average roll of two dice will be 7 and Orange is 6 to 9 squa
 
 Pink accounts for the rolls from Jail that are low and Red accounts for the rolls 
 from Jail that are high.
+
+## How to Run
+1. Via a command line, change to this git repository on your local machine.
+2. The `simulate.py` module accepts two positional arguments: `rounds` and `games`.
+3. Type `python3 simulate.py rounds games` (changing out rounds and games for the 
+integer values you want)
+    4. *e.g.,* `python3 simulate.py 100 1000000` for 100 rounds for 1,000,000 games
+    
+*Note:* This Python script uses Python 3. Make sure to use the appropriate Python call.
