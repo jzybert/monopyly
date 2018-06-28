@@ -7,7 +7,7 @@ import random
 
 NUMBER_OF_SQUARES = 40
 NUMBER_OF_ROUNDS = 100
-NUMBER_OF_ITERATIONS = 100
+NUMBER_OF_ITERATIONS = 1000000
 
 # Array to be updated each time an index is visited
 count_visited = [
@@ -26,13 +26,13 @@ class SquareType(enum.Enum):
     Enumeration class representing what type a square can be.
     """
     GO = 0
-    DARK_BLUE = 1
+    BROWN = 1
     TAX = 2
     RAILROAD = 3
     LIGHT_BLUE = 4
     CHANCE = 5
     JAIL = 6
-    PURPLE = 7
+    PINK = 7
     UTILITY = 8
     ORANGE = 9
     COMMUNITY_CHEST = 10
@@ -41,14 +41,14 @@ class SquareType(enum.Enum):
     YELLOW = 13
     GO_TO_JAIL = 14
     GREEN = 15
-    BLUE = 16
+    DARK_BLUE = 16
 
 
 squares = [
     {"name": "Go", "type": SquareType.GO},
-    {"name": "Mediterranean Avenue", "type": SquareType.DARK_BLUE},
+    {"name": "Mediterranean Avenue", "type": SquareType.BROWN},
     {"name": "Community Chest", "type": SquareType.COMMUNITY_CHEST},
-    {"name": "Baltic Avenue", "type": SquareType.DARK_BLUE},
+    {"name": "Baltic Avenue", "type": SquareType.BROWN},
     {"name": "Income Tax", "type": SquareType.TAX},
     {"name": "Reading Railroad", "type": SquareType.RAILROAD},
     {"name": "Central Avenue", "type": SquareType.LIGHT_BLUE},
@@ -56,10 +56,10 @@ squares = [
     {"name": "Vermont Avenue", "type": SquareType.LIGHT_BLUE},
     {"name": "Connecticut Avenue", "type": SquareType.LIGHT_BLUE},
     {"name": "Jail", "type": SquareType.JAIL},
-    {"name": "St. Charles Place", "type": SquareType.PURPLE},
+    {"name": "St. Charles Place", "type": SquareType.PINK},
     {"name": "Electric Company", "type": SquareType.UTILITY},
-    {"name": "States Avenue", "type": SquareType.PURPLE},
-    {"name": "Virginia Avenue", "type": SquareType.PURPLE},
+    {"name": "States Avenue", "type": SquareType.PINK},
+    {"name": "Virginia Avenue", "type": SquareType.PINK},
     {"name": "Pennsylvania Railroad", "type": SquareType.RAILROAD},
     {"name": "St. James Place", "type": SquareType.ORANGE},
     {"name": "Community Chest", "type": SquareType.COMMUNITY_CHEST},
@@ -82,9 +82,9 @@ squares = [
     {"name": "Pennsylvania Avenue", "type": SquareType.GREEN},
     {"name": "Short Line", "type": SquareType.RAILROAD},
     {"name": "Chance", "type": SquareType.CHANCE},
-    {"name": "Park Place", "type": SquareType.BLUE},
-    {"name": "Luxury Tax", "type": SquareType.BLUE},
-    {"name": "Board Walk", "type": SquareType.BLUE}
+    {"name": "Park Place", "type": SquareType.DARK_BLUE},
+    {"name": "Luxury Tax", "type": SquareType.DARK_BLUE},
+    {"name": "Board Walk", "type": SquareType.DARK_BLUE}
 ]
 
 SQUARE_INDEX_GO = 0
@@ -294,6 +294,8 @@ def simulate(number_of_rounds, number_of_iterations):
     """
     global count_visited
     for ii in range(number_of_iterations):
+        if ii % 100000 == 0:
+            print("Iteration {} completed".format(ii))
         player = Player()
         for jj in range(number_of_rounds):
             player.simulate_round()
